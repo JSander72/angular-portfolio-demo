@@ -1,0 +1,9 @@
+/* keep styles minimal and portable */
+table th, table td {
+  vertical-align: middle;
+}
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
