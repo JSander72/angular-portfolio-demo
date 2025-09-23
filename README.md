@@ -5,12 +5,14 @@ A modern Angular application showcasing a comprehensive Pokémon dashboard with 
 ## 🚀 Features
 
 ### Pokémon Dashboard
+
 - **Quick Search**: Instant Pokémon lookup by name with detailed information
 - **Browse All**: Paginated table view of all Pokémon with sprites
 - **Real-time Filtering**: Search through loaded Pokémon as you type
 - **Responsive Design**: Clean, professional UI that works on all devices
 
 ### Technical Highlights
+
 - ✅ **Standalone Components**: Modern Angular architecture without NgModules
 - ✅ **HTTP Client with Fetch**: Optimized for performance and SSR compatibility
 - ✅ **Reactive Forms**: Two-way data binding with FormsModule
@@ -21,10 +23,12 @@ A modern Angular application showcasing a comprehensive Pokémon dashboard with 
 ## 🛠️ Architecture
 
 ### Components
+
 - **App Component**: Main application shell with navigation
 - **Dashboard Component**: Feature-rich Pokémon browser and search
 
 ### Services
+
 - **PokemonService**: Comprehensive API service with:
   - Single Pokémon fetch by name/ID
   - Paginated list retrieval with metadata
@@ -32,7 +36,8 @@ A modern Angular application showcasing a comprehensive Pokémon dashboard with 
   - Optimized sprite URLs for fast loading
 
 ### API Integration
-- **PokéAPI**: RESTful integration with https://pokeapi.co
+
+- **PokéAPI**: RESTful integration with pokeapi.co
 - **Error Handling**: Graceful fallbacks and user feedback
 - **Loading States**: Real-time UI feedback during API calls
 
@@ -67,7 +72,6 @@ Once the server is running, open your browser and navigate to `http://localhost:
 
 ## 📁 Project Structure
 
-```
 src/
 ├── app/
 │   ├── pages/
@@ -80,15 +84,16 @@ src/
 │   ├── app.routes.ts           # Route configuration
 │   ├── app.config.ts           # App configuration
 │   └── main.ts                 # Bootstrap
-```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (18+ recommended)
 - Angular CLI (`npm install -g @angular/cli`)
 
 ### Installation
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -101,7 +106,7 @@ npm install
 ng serve
 ```
 
-## Development server
+### Running the Development Server
 
 To start a local development server, run:
 
@@ -114,18 +119,21 @@ Once the server is running, open your browser and navigate to `http://localhost:
 ## 🔧 Available Scripts
 
 ### Building
+
 ```bash
 ng build                    # Production build
 ng build --watch           # Development build with watch mode
 ```
 
 ### Testing
+
 ```bash
 ng test                    # Run unit tests
 ng e2e                     # Run end-to-end tests (when configured)
 ```
 
 ### Code Generation
+
 ```bash
 ng generate component component-name    # Generate new component
 ng generate service service-name        # Generate new service
@@ -135,7 +143,9 @@ ng generate --help                      # See all available schematics
 ## 🎨 Customization
 
 ### Adding New Routes
+
 Update `src/app/app.routes.ts` to add new pages:
+
 ```typescript
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -146,7 +156,9 @@ export const routes: Routes = [
 ```
 
 ### Extending the PokemonService
+
 The service supports multiple operations:
+
 ```typescript
 // Single Pokémon
 getPokemon(name: string): Observable<any>
