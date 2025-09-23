@@ -1,81 +1,126 @@
-<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-  <!-- Pokemon Search Section -->
-  <section style="margin-bottom: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-    <h2>Quick Pokémon Search</h2>
-    <div style="margin: 20px 0;">
-      <input [(ngModel)]="pokemonName" placeholder="Enter Pokémon name" style="padding: 8px; margin-right: 10px;" />
-      <button (click)="searchPokemon()" style="padding: 8px 16px; background: #007acc; color: white; border: none; cursor: pointer;">Search</button>
-    </div>
-
-    <div *ngIf="pokemon" style="margin-top: 20px; text-align: center;">
-      <h3>{{ pokemon.name | uppercase }}</h3>
-      <img [src]="pokemon.sprites.front_default" alt="{{pokemon.name}}" />
-      <p><strong>Height:</strong> {{ pokemon.height }}</p>
-      <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
-    </div>
-
-    <div *ngIf="pokemon === null" style="color: red; margin-top: 20px;">
-      <p>Pokémon not found! Please try another name.</p>
-    </div>
-  </section>
-
-  <!-- Pokemon List Section -->
-  <section>
-    <header style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-      <h2 style="margin:0;">Pokémon Dashboard</h2>
+<div class="dashboard">
+  <section class="panel panel--accent">
+    <header class="panel__header">
       <div>
-        <input
-          [(ngModel)]="search"
-          (input)="onSearchChange()"
-          placeholder="Search by name..."
-          aria-label="search"
-          style="padding:0.5rem 0.75rem; border:1px solid #ddd; border-radius:8px; min-width: 220px;"
-        />
+        <p class="panel__eyebrow">Quick Search</p>
+        <h2 class="panel__title">Find Pokémon by Name</h2>
+        <p class="panel__subtitle">Jump straight to the Pokémon you want to explore.</p>
       </div>
     </header>
 
-    <div *ngIf="loading">Loading…</div>
-    <div *ngIf="error" style="color:#b00020;">{{ error }}</div>
+    <form
+      class="search-form"
+      (submit)="searchPokemon(); $event.preventDefault()"
+      aria-label="Search a Pokémon by name"
+    >
+      <label class="field">
+        <span class="field__label">Pokémon Name</span>
+        <input
+          type="text"
+          name="pokemonName"
+          [(ngModel)]="pokemonName"
+          placeholder="e.g. Pikachu"
+          class="field__input"
+        />
+      </label>
+      <button type="submit" class="button button--primary">Search</button>
+    </form>
+
+    <div *ngIf="pokemon" class="pokemon-summary">
+      <div class="pokemon-summary__avatar">
+        <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
+      </div>
+      <div class="pokemon-summary__content">
+        <h3 class="pokemon-summary__name">{{ pokemon.name | titlecase }}</h3>
+        <dl class="pokemon-summary__meta">
+          <div>
+            <dt>Height</dt>
+            <dd>{{ pokemon.height }}</dd>
+          </div>
+          <div>
+            <dt>Weight</dt>
+            <dd>{{ pokemon.weight }}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div *ngIf="pokemon === null" class="alert alert--error">
+      Pokémon not found! Please try another name.
+    </div>
+  </section>
+
+  <section class="panel">
+    <header class="panel__header panel__header--between">
+      <div>
+        <h2 class="panel__title">Pokémon Dashboard</h2>
+        <p class="panel__subtitle">Browse the Pokédex and dive into quick details.</p>
+      </div>
+      <label class="field field--compact">
+        <span class="field__label sr-only">Filter Pokémon by name</span>
+        <input
+          [(ngModel)]="search"
+          (input)="onSearchChange()"
+          name="search"
+          placeholder="Search by name..."
+          aria-label="Search Pokémon by name"
+          class="field__input"
+        />
+      </label>
+    </header>
+
+    <div *ngIf="loading" class="status status--loading">Loading…</div>
+    <div *ngIf="error" class="alert alert--error">{{ error }}</div>
 
     <div *ngIf="!loading && !error">
-      <div style="overflow:auto;">
-        <table style="border-collapse:collapse; width:100%; min-width:480px;">
+      <div class="table-wrapper">
+        <table class="data-table">
           <thead>
             <tr>
-              <th style="text-align:left; padding:0.5rem; border-bottom:1px solid #eee;">#</th>
-              <th style="text-align:left; padding:0.5rem; border-bottom:1px solid #eee;">Sprite</th>
-              <th style="text-align:left; padding:0.5rem; border-bottom:1px solid #eee;">Name</th>
-              <th style="text-align:left; padding:0.5rem; border-bottom:1px solid #eee;">Action</th>
+              <th scope="col">#</th>
+              <th scope="col">Sprite</th>
+              <th scope="col">Name</th>
+              <th scope="col" class="align-right">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let p of filtered" style="border-bottom:1px solid #f3f3f3;">
-              <td style="padding:0.5rem;">{{ p.id }}</td>
-              <td style="padding:0.5rem;">
-                <img [src]="p.image" [alt]="p.name" width="48" height="48" />
+            <tr *ngFor="let p of filtered">
+              <td>{{ p.id }}</td>
+              <td>
+                <img [src]="p.image" [alt]="p.name" width="48" height="48" loading="lazy" />
               </td>
-              <td style="padding:0.5rem; text-transform:capitalize;">{{ p.name }}</td>
-              <td style="padding:0.5rem;">
-                <button (click)="view(p)" style="padding:0.35rem 0.75rem; border:1px solid #ddd; border-radius:8px; background:#fff; cursor:pointer;">
+              <td class="capitalize">{{ p.name }}</td>
+              <td class="align-right">
+                <button type="button" (click)="view(p)" class="button button--ghost">
                   View
                 </button>
               </td>
             </tr>
             <tr *ngIf="filtered.length === 0">
-              <td colspan="4" style="padding:1rem; text-align:center; color:#666;">No results</td>
+              <td colspan="4" class="empty">No results</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <footer style="display:flex; gap:0.5rem; align-items:center; justify-content:flex-end; margin-top:1rem;">
-        <button (click)="prev()" [disabled]="offset === 0" style="padding:0.35rem 0.75rem; border:1px solid #ddd; border-radius:8px; background:#fff; cursor:pointer;">
+      <footer class="pagination">
+        <button
+          type="button"
+          (click)="prev()"
+          [disabled]="offset === 0"
+          class="button button--ghost"
+        >
           ◀ Prev
         </button>
-        <span style="font-size:0.9rem; color:#555;">
+        <span class="pagination__status">
           Showing {{ offset + 1 }}–{{ Math.min(offset + limit, total) }} of {{ total }}
         </span>
-        <button (click)="next()" [disabled]="offset + limit >= total" style="padding:0.35rem 0.75rem; border:1px solid #ddd; border-radius:8px; background:#fff; cursor:pointer;">
+        <button
+          type="button"
+          (click)="next()"
+          [disabled]="offset + limit >= total"
+          class="button button--ghost"
+        >
           Next ▶
         </button>
       </footer>

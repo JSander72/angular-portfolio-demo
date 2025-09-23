@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-magenta: #d500f9;
+  --color-forest: #228b22;
+  --color-black: #040404;
+  --color-surface: rgba(4, 4, 4, 0.78);
+  --color-surface-alt: rgba(21, 47, 21, 0.72);
+  --color-text-primary: #f8f8fc;
+  --color-text-muted: #c5c1d6;
+  --color-border: rgba(213, 0, 249, 0.38);
+  --color-border-strong: rgba(34, 139, 34, 0.45);
+  --gradient-page: linear-gradient(135deg, var(--color-black) 0%, var(--color-forest) 48%, var(--color-magenta) 100%);
+  --gradient-header: linear-gradient(135deg, rgba(4, 4, 4, 0.92) 0%, rgba(34, 139, 34, 0.45) 48%, rgba(213, 0, 249, 0.35) 100%);
+  --gradient-panel: linear-gradient(135deg, rgba(4, 4, 4, 0.86) 0%, rgba(21, 59, 21, 0.72) 48%, rgba(213, 0, 249, 0.4) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-magenta) 0%, var(--color-forest) 50%, var(--color-black) 100%);
+  --gradient-surface: linear-gradient(135deg, rgba(4, 4, 4, 0.78) 0%, rgba(21, 47, 21, 0.65) 100%);
+  --shadow-elevated: 0 28px 45px rgba(0, 0, 0, 0.45);
+  --font-heading: "Inter Tight", "Inter", "Segoe UI", Arial, sans-serif;
+  --font-base: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  color: var(--color-text-primary);
+  background: var(--gradient-page);
+  background-size: 400% 400%;
+  background-attachment: fixed;
+  line-height: 1.5;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(213, 0, 249, 0.65);
+  color: #0a0a0a;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(4, 4, 4, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-accent);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--color-magenta) 0%, var(--color-forest) 100%);
+}
+
+/* Enhanced focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-magenta);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Utility classes for consistent gradient usage */
+.gradient-text {
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: textShimmer 8s ease-in-out infinite;
+}
+
+@keyframes textShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--gradient-surface);
+  border-radius: 16px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: var(--gradient-accent);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+}
